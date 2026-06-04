@@ -1,74 +1,32 @@
-const cells = document.querySelectorAll(".cell");
-const statusText = document.getElementById("status");
-const resetButton = document.getElementById("reset");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Tic-Tac-Toe </title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Tic-Tac-Toe</h1>
 
-let board = ["", "", "", "", "", "", "", "", ""];
-let currentPlayer = "X";
-let gameActive = true;
+        <div id="status">Player X's turn</div>
 
-const winningCombinations = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6]
-];
+        <div id="board" class="board">
+            <button class="cell" data-index="0"></button>
+            <button class="cell" data-index="1"></button>
+            <button class="cell" data-index="2"></button>
+            <button class="cell" data-index="3"></button>
+            <button class="cell" data-index="4"></button>
+            <button class="cell" data-index="5"></button>
+            <button class="cell" data-index="6"></button>
+            <button class="cell" data-index="7"></button>
+            <button class="cell" data-index="8"></button>
+        </div>
 
-function handleCellClick(event) {
-    const index = event.target.dataset.index;
+        <button id="reset">New Game</button>
+    </div>
 
-    if (!gameActive || board[index] !== "") {
-        return;
-    }
-
-    board[index] = currentPlayer;
-    event.target.textContent = currentPlayer;
-
-    checkGameState();
-}
-
-function checkGameState() {
-    for (const combo of winningCombinations) {
-        const [a, b, c] = combo;
-
-        if (
-            board[a] &&
-            board[a] === board[b] &&
-            board[a] === board[c]
-        ) {
-            statusText.textContent = `Player ${currentPlayer} wins!`;
-            gameActive = false;
-            return;
-        }
-    }
-
-    if (!board.includes("")) {
-        statusText.textContent = "Draw!";
-        gameActive = false;
-        return;
-    }
-
-    currentPlayer = currentPlayer === "X" ? "O" : "X";
-    statusText.textContent = `Player ${currentPlayer}'s turn`;
-}
-
-function resetGame() {
-    board = ["", "", "", "", "", "", "", "", ""];
-    currentPlayer = "X";
-    gameActive = true;
-
-    statusText.textContent = "Player X's turn";
-
-    cells.forEach(cell => {
-        cell.textContent = "";
-    });
-}
-
-cells.forEach(cell => {
-    cell.addEventListener("click", handleCellClick);
-});
-
-resetButton.addEventListener("click", resetGame);
+    <script src="game.js"></script>
+</body>
+</html>
